@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,6 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Анализ акций с помощью ИИ и калькулятора внутренней стоимости</title>
 <style>
+ :root {
+            --primary-color: #2E7D32;
+            --primary-light: #4CAF50;
+            --secondary-color: #1565C0;
+            --secondary-light: #2196F3;
+            --background-light: #f8fafc;
+            --background-dark: #e8edf2;
+            --text-color: #2d3748;
+            --text-light: #4a5568;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --error-color: #D32F2F;
+            --success-color: #388E3C;
+            --warning-color: #F57C00;
+            --card-radius: 12px;
+            --transition: all 0.2s ease-in-out;
+            --dark-grey: #616161;
+            --dark-grey-hover: #424242;
   body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -12,12 +32,19 @@
     background: #f9f9f9;
     color: #333;
   }
-  header, footer {
-    background: #222;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
+  header, 
+  
+  footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+            position: relative;
+        }
   main.wrap {
     max-width: 900px;
     margin: 0 auto;
