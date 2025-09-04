@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Анализ Акций с помощью ИИ и калькулятора внутренней стоимости</title>
+  <meta name="description" content="Шаблоны ИИ‑запросов для оценки экономического рва и лидерства компании на рынке, и руководство по использованию калькулятора внутренней стоимости." />
+  <style>
+    :root{
+      --bg:#0b1220;          /* глубокий тёмно‑синий фон */
+      --card:#0f1a2b;        /* карточки/панели */
+      --card-2:#111e33;
+      --text:#e6eefc;
+      --muted:#a7b4cc;
+      --accent:#22c55e;      /* зелёный как в кнопке на скрине */
+      --accent-2:#16a34a;
+      --warn:#f59e0b;        /* янтарный для заметок */
+      --border:#1c2a44;
+      --good:#34d399;
+      --mid:#60a5fa;
+      --bad:#ef4444;
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --radius:14px;
+      --radius-sm:10px;
+      --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      --sans: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{background:var(--bg);color:var(--text);font-family:var(--sans);margin:0;padding:0}
+    a{color:var(--mid);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+    header{
+      background: linear-gradient(180deg, rgba(34,197,94,.08), transparent 60%);
+      border-bottom:1px solid var(--border);
+      margin-bottom:28px;
+    }
+    .hero{
+      display:flex;gap:22px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
+      padding:24px 0 8px;
+    }
+    .title{font-size:30px;line-height:1.2;margin:0 0 8px;font-weight:800;letter-spacing:.2px}
+    .subtitle{color:var(--muted);margin:0 0 14px;max-width:780px}
+    .cta{
+      display:flex;gap:12px;flex-wrap:wrap
+    }
+    .btn{
+      background:var(--accent);color:#052e14;border:none;border-radius:12px;
+      padding:12px 16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:.15s;
+    }
+    .btn:hover{background:var(--accent-2);transform:translateY(-1px)}
+    .btn.ghost{
+      background:transparent;color:var(--text);border:1px solid var(--border)
+    }
+    .grid{
+      display:grid;grid-template-columns:1fr;gap:18px
+    }
+    @media(min-width:900px){.grid{grid-template-columns:1.1fr 1fr}}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:18px;
+    }
+    .card h2, .card h3{
+      margin:8px 0 10px;font-size:20px
+    }
+    .card h4{margin:10px 0 10px;font-size:16px;color:var(--muted)}
+    .kbd{
+      font-family:var(--mono);background:var(--card-2);border:1px solid var(--border);padding:2px 6px;border-radius:6px
+    }
+    .note{
+      background:rgba(245,158,11,.12);color:#ffd58a;border:1px solid rgba(245,158,11,.3);
+      border-radius:var(--radius-sm);padding:12px;margin:8px 0
+    }
+    .success{color:var(--good)}
+    .warn{color:var(--warn)}
+    .muted{color:var(--muted)}
+    .copy-row{display:flex;gap:10px;align-items:center;margin:10px 0 14px}
+    .copy-field{
+      flex:1;position:relative
+    }
+    textarea.code{
+      width:100%;min-height:180px;resize:vertical;background:var(--card-2);color:var(--text);
+      border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:var(--mono);line-height:1.45
+    }
+    .copy-btn{
+      background:transparent;border:1px solid var(--border);color:var(--text);border-radius:10px;
+      padding:10px 12px;cursor:pointer
+    }
+    .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .list{margin:8px 0 0 0;padding-left:18px}
+    .list li{margin:6px 0}
+    .pill{
+      display:inline-block;background:rgba(34,197,94,.12);color:var(--good);border:1px solid rgba(34,197,94,.35);
+      padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.3px;margin-right:6px
+    }
+    .kbdbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+    .kbdbar .kbd{border-radius:8px}
+    .two-col{display:grid;grid-template-columns:1fr;gap:14px}
+    @media(min-width:760px){.two-col{grid-template-columns:1fr 1fr}}
+    footer{
+      margin-top:28px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:14px
+    }
+    .scenarios{display:grid;grid-template-columns:1fr;gap:10px}
+    @media(min-width:640px){.scenarios{grid-template-columns:repeat(3,1fr)}}
+    .scenario{background:var(--card-2);border:1px solid var(--border);border-radius:12px;padding:12px}
+    .scenario h5{margin:6px 0 6px;font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+    .scenario .value{font-weight:800;font-size:22px}
+    .scenario.good .value{color:var(--good)}
+    .scenario.base .value{color:var(--mid)}
+    .scenario.bad .value{color:var(--warn)}
+    .hint{font-size:13px;color:var(--muted)}
+    .divider{height:1px;background:var(--border);margin:14px 0}
+    .kbd-inline{font-family:var(--mono);background:rgba(255,255,255,.06);padding:2px 4px;border-radius:6px}
+    
+    .tooltip{border-bottom:1px dotted #aaa;cursor:help;position:relative}
+//.tooltip:hover::after{
+  content:attr(title);
+  position:absolute;
+  background:#111e33;
+  color:#fff;
+  padding:6px 8px;
+  border-radius:6px;
+  top:120%;
+  left:0;
+  white-space:nowrap;
+  z-index:10;
+  font-size:13px;
+  border:1px solid #1c2a44;
+}//
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <h1 class="title">Анализ Акций с помощью ИИ и калькулятора внутренней стоимости</h1>
+        <p class="subtitle">
+          Эта страница помогает быстро оценить «экономический ров», рыночное лидерство компании и связать это с её справедливой ценой,
+          используя структурированные запросы к ИИ и калькулятор внутренней стоимости.
+        </p>
+        <div class="cta">
+          <a href="#moat" class="btn">Запрос 1: Экономический ров</a>
+          <a href="#leadership" class="btn ghost">Запрос 2: Лидерство на рынке</a>
+          <a href="#calculator" class="btn ghost">Как пользоваться калькулятором</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Важное пояснение по стратегии</h2>
+      <div class="note">
+        Ни одна инвестиционная стратегия не гарантирует 100% результатов. Подход на этой странице сфокусирован на качественных компаниях‑лидерах
+        и учитывает их текущую стоимость через внутреннюю ценность. Это снижает риски и потенциально даёт шанс получить доход выше S&P 500 на длинном горизонте
+        при условии дисциплины: стабильного <span class="tooltip" data-i18n-title="dcaTip" title="DCA - Dollar-Cost Averaging - усреднение стоимости покупки или постепенное инвестирование фиксированной суммы.">DCA</span>, регулярной ребалансировки по плану и отсутствия панических продаж во время неизбежных просадок.
+    </section>
+<br>
+
+    <div class="grid">
+      <!-- Запрос 1: Экономический ров -->
+      <section id="moat" class="card">
+        <h2>Определение экономического рва с помощью ИИ</h2>
+        <p class="muted">
+          Скопируйте и вставьте запрос в ваш ИИ. Замените ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ на реальный тикер (например - MSFT).
+        </p>
+        <div class="copy-row">
+          <div class="copy-field">
+            <textarea id="promptMoat" class="code" spellcheck="false">Проанализируй ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ по следующим показателям:
+• Валовая маржа выше среднеотраслевой на ≥5–10 п.п.
+• Стабильный или растущий объём продаж при высокой цене
+• Высокая доля повторных покупок
+• Доля выручки от запатентованных продуктов
+• R&D как % от выручки (и его отдача)
+• Срок действия ключевых патентов
+• Темпы роста активных пользователей (MAU/DAU)
+• Коэффициент удержания пользователей (Retention Rate) > 80%
+• Доля рынка растёт пропорционально росту базы
+• Уровень оттока клиентов (Churn Rate) < 5–10% в год
+• Средняя длительность контракта/сотрудничества
+• % клиентов, использующих несколько продуктов экосистемы
+• Количество лицензий/разрешений, необходимых для работы
+• Доля рынка у топ‑3 компаний > 70%
+• Стабильность доли рынка в течение ≥5 лет.
+
+Дай Итоговую оценку по критериям (Сильный/Средний/Слабый ров) с обоснованием и ссылками на ключевые источники.</textarea>
+          </div>
+          <button class="copy-btn" data-copy="#promptMoat">Копировать</button>
+        </div>
+
+<h3>
+  <button id="toggleListBtn2" style="all:unset; cursor:pointer; color:#0078d4;">
+    Как понять ответ ИИ ▼
+  </button>
+</h3>
+        <div id="metricsList2" style="display:none;">
+        <ul class="list">
+          <li><strong>Маржинальность:</strong> устойчивый отрыв валовой маржи от отрасли указывает на ценовую силу и эффект масштаба.</li>
+          <li><strong>Повторяемость выручки:</strong> высокий retention, низкий churn и мульти‑продуктовое использование усиливают ров.</li>
+          <li><strong>Интеллектуальная собственность:</strong> патенты, лицензии, закрытые стандарты продлевают период сверхприбыли.</li>
+          <li><strong>Сеть и стандарты:</strong> рост базы и превращение продукта в де‑факто стандарт усиливают барьеры входа.</li>
+          <li><strong>Итог:</strong> «Сильный ров» при выполнении большинства пунктов со стабильностью ≥5 лет.</li>
+        </ul>
+      </section>
+
+      <!-- Запрос 2: Лидерство в нише/индустрии -->
+      <section id="leadership" class="card">
+        <h2>Лидерство и концентрация рынка с помощью ИИ</h2>
+        <p class="muted">Этот запрос оценивает масштаб, долю рынка и способность диктовать условия отрасли.</p>
+        <div class="copy-row">
+          <div class="copy-field">
+            <textarea id="promptLeader" class="code" spellcheck="false">Проанализируй ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ по следующим показателям:
+
+Категория: Концентрация рынка
+— Доля рынка компании (%): прямой показатель масштаба; >40% в большинстве отраслей — признак высокой концентрации
+— CR3 / CR4 (Concentration Ratio): суммарная доля рынка 3–4 крупнейших игроков; >70% — рынок высококонцентрирован
+— HHI (Herfindahl–Hirschman Index): сумма квадратов долей всех игроков; >2500 — высокая концентрация (стандарты США)
+— Коэффициент Линда (L): разрыв между лидером и остальными; чем выше, тем сильнее лидер отрывается
+— Коэффициент Холла–Тайдмана (HT): учитывает и количество игроков, и распределение долей; высокое значение = доминирование
+
+Категория: Влияние на отрасль
+— Ценовое лидерство: может ли компания диктовать цены; если конкуренты следуют за изменением цен лидера — признак доминирования
+— Барьер входа (CapEx, лицензии): высокие капитальные затраты/регуляторные требования усиливают позиции лидера
+— Доля отраслевых стандартов, задаваемых компанией: если продукт стал «де‑факто стандартом»
+
+Категория: Динамика
+— Стабильность доли рынка: изменение доли за 5–10 лет; стабильная/растущая доля = устойчивое лидерство
+— Темпы роста vs отрасль: сравнение CAGR компании и отрасли; рост выше отрасли — лидер усиливает позиции
+
+Дай Итоговую оценку по критериям (Лидер/Сильный претендент/Ниша) с кратким обоснованием и источниками.</textarea>
+          </div>
+          <button class="copy-btn" data-copy="#promptLeader">Копировать</button>
+        </div>
+<h3>
+  <button id="toggleListBtn" style="all:unset; cursor:pointer; color:#0078d4;">
+    Как читать метрики ▼
+  </button>
+</h3>
+
+<div id="metricsList" style="display:none;">
+  <ul class="list">
+    <li><strong>CR3/CR4 и HHI:</strong> показывают концентрацию. Высокие значения + лидерская доля — признак устойчивой силы.</li>
+    <li><strong>Линда и Холла–Тайдмана:</strong> помогают увидеть разрыв лидера и асимметрию распределения.</li>
+    <li><strong>Цены и стандарты:</strong> если рынок «равняется» на компанию, это подтверждает влияние на отрасль.</li>
+    <li><strong>Динамика доли и CAGR:</strong> устойчивый рост быстрее отрасли консервирует лидерство.</li>
+  </ul>
+</div>
+       
+
+    
+    <br>
+    
+    <!-- Руководство по калькулятору внутренней стоимости -->
+    <section id="calculator" class="card">
+      <h2>Как пользоваться калькулятором внутренней стоимости</h2>
+      <p class="muted">
+        Ссылка на Калькулятор - <a href="https://pavlolomakin.github.io/IV-calculator/" target="_blank" rel="noopener noreferrer">
+  Калькулятор IV
+</a>
+      </p>
+
+      <div class="two-col">
+        <div>
+          <h3>Шаги</h3>
+          <ol class="list">
+            <li><strong>Вставьте тикер:</strong> это помогает ориентироваться по отраслевым мультипликаторам и марже.</li>
+            <li><strong>Оцените ожидаемый рост:</strong> задайте 3 траектории (например, 9% / 13% / 17%) с оглядкой на историю и рынок.</li>
+            <li><strong>Выберите Forward P/E:</strong> ориентируйтесь на сравнимые компании и премию за качество/рост.</li>
+            <li><strong>Установите ставку дисконтирования:</strong> обычно 8–12% с учетом безрисковой ставки и риска компании.</li>
+            <li><strong>Выберите терминальный P/E:</strong> консервативно (например, 12–18) исходя из зрелости бизнеса через 5–10 лет.</li>
+            <li><strong>Введите текущую цену:</strong> чтобы увидеть потенциал и запас прочности для каждой траектории.</li>
+            <li><strong>Нажмите «Рассчитать внутреннюю стоимость»:</strong> изучите три сценария и сопоставьте с риском.</li>
+          </ol>
+        </div>
+
+        <div>
+          <h3>Как интерпретировать сценарии</h3>
+          <div class="scenarios">
+            <div class="scenario bad">
+              <h5>Пессимистичный</h5>
+              <div class="value">IV ниже цены</div>
+              <div class="hint">Требуется запас прочности или меньшая доля в портфеле.</div>
+            </div>
+            <div class="scenario base">
+              <h5>Базовый</h5>
+              <div class="value">IV ≈ цена</div>
+              <div class="hint">Разумная оценка. DCA подходит, если ров и лидерство подтверждены.</div>
+            </div>
+            <div class="scenario good">
+              <h5>Оптимистичный</h5>
+              <div class="value">IV выше цены</div>
+              <div class="hint">Есть апсайд. Проверьте допущения, чтобы избежать переоценки роста.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Практические ориентиры</h3>
+      <ul class="list">
+        <li><strong>Рост:</strong> берите диапазон, а не одну цифру; проверяйте против истории и консенсуса.</li>
+        <li><strong>Forward P/E:</strong> лидер с сильным рвом может торговаться с премией; избегайте нереалистичных мультипликаторов.</li>
+        <li><strong>Дисконт:</strong> чем выше неопределенность и долговая нагрузка, тем выше ставка.</li>
+        <li><strong>Терминальный P/E:</strong> для зрелых технологий часто 14–18; для капиталоёмких отраслей ниже.</li>
+        <li><strong>Запас прочности:</strong> планируйте покупки при дисконте к базовой IV, а не только к оптимистичной.</li>
+      </ul>
+
+      <div class="note">
+        Сопоставляйте выводы калькулятора с качеством бизнеса из блоков «Экономический ров» и «Лидерство». Если качество высокое, допускается
+        меньший требуемый дисконт; если качество спорно — закладывайте больший запас прочности и снижайте долю позиции.
+      </div>
+
+      <h3>Советы по дисциплине <span class="tooltip" data-i18n-title="dcaTip" title="DCA - Dollar-Cost Averaging - усреднение стоимости покупки или постепенное инвестирование фиксированной суммы.">DCA</span></h3>
+      <ul class="list">
+        <li><strong>План:</strong> фиксируйте периодичность и объём покупок заранее, независимо от шума рынка.</li>
+        <li><strong>Ребалансировка:</strong> периодически выравнивайте доли, снижая перекосы и фиксируя часть прибыли.</li>
+        <li><strong>Психология:</strong> временные просадки — норма; избегайте эмоциональных решений против вашей системы.</li>
+      </ul>
+    </section>
+
+    <!-- Быстрый чек‑лист -->
+    <section class="card">
+      <h2>Быстрый чек‑лист перед покупкой</h2>
+      <ul class="list">
+        <li><span class="pill">Moat</span><strong>Ров подтверждён?</strong> Маржа, retention, <span class="tooltip" data-i18n-title="ipTip" title="IP - Intellectual Property - интеллектуальная собственность">IP</span>, барьеры входа, стабильность доли ≥5 лет.</li>
+        <li><span class="pill">Leader</span><strong>Лидерство подтверждено?</strong> <span class="tooltip" data-i18n-title="crTip" title="CR3/CR4 - коэффициент концентрации трёх или четырёх крупнейших фирм - это простой показатель, который показывает, какой процент рынка контролируют самые крупные игроки в отрасли.">CR3/CR4</span>, <span class="tooltip" data-i18n-title="hhiTip" title="HHI - Herfindahl–Hirschman Index - это показатель концентрации рынка, который используют экономисты и антимонопольные регуляторы, чтобы оценить уровень конкуренции в отрасли">HHI</span>, ценовое влияние, стандарты, <span class="tooltip" data-i18n-title="cagrTip" title="CAGR - среднегодовой темп роста в сложных процентах - показывает, на сколько процентов в среднем ежегодно изменялся показатель">CAGR</span> > отрасли.</li>
+        <li><span class="pill">Valuation</span><strong>Оценка разумна?</strong> Базовая <span class="tooltip" data-i18n-title="ivTip" title="IV - Intrinsic Value - это оценка того, сколько акция действительно стоит, если смотреть на бизнес компании, а не на текущие колебания цены на бирже">IV</span> не ниже текущей цены, есть запас прочности.</li>
+        <li><span class="pill">Risk</span><strong>Риск учтён?</strong> Долг, регуляторика, зависимость от ключевых клиентов/поставщиков.</li>
+        <li><span class="pill"><span class="tooltip" data-i18n-title="dcaTip" title="DCA - Dollar-Cost Averaging - усреднение стоимости покупки или постепенное инвестирование фиксированной суммы.">DCA</span></span><strong>План готов?</strong> График, лимиты, точки пересмотра гипотез, правила продажи.</li>
+      </ul>
+    </section>
+
+    <footer>
+© Акции с Павлом Ломакиным
+    </footer>
+  </main>
+
+  <script>
+    // Копирование промптов
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const sel = btn.getAttribute('data-copy');
+        const el = document.querySelector(sel);
+        if(!el) return;
+        el.select();
+        el.setSelectionRange(0, el.value.length);
+        const ok = document.execCommand('copy');
+        btn.textContent = ok ? 'Скопировано' : 'Не удалось';
+        setTimeout(()=>btn.textContent='Копировать',1300);
+      });
+    });
+    
+const btn = document.getElementById('toggleListBtn');
+const list = document.getElementById('metricsList');
+
+btn.addEventListener('click', () => {
+  const isHidden = list.style.display === 'none';
+  list.style.display = isHidden ? 'block' : 'none';
+  btn.textContent = isHidden ? 'Как читать метрики ▲' : 'Как читать метрики ▼';
+});
+
+const btn2 = document.getElementById('toggleListBtn2');
+const list2 = document.getElementById('metricsList2');
+
+btn2.addEventListener('click', () => {
+  const isHidden = list2.style.display === 'none';
+  list2.style.display = isHidden ? 'block' : 'none';
+  btn2.textContent = isHidden ? 'Как понять ответ ИИ ▲' : 'Как понять ответ ИИ ▼';
+});
+
+  </script>
+</body>
+</html>
