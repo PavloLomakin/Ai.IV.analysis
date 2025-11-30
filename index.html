@@ -24,6 +24,8 @@
             --transition: all 0.2s ease-in-out;
             --dark-grey: #616161;
             --dark-grey-hover: #424242;
+        }
+
   body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -31,24 +33,71 @@
     background: #f9f9f9;
     color: #333;
   }
-  header, 
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 25px 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    position: relative;
+  }
+  
+  .header-content {
+    text-align: center;
+    flex-grow: 1;
+    padding-right: 20px;
+  }
+  
+  .header-buttons {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .header-button {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    background-color: var(--dark-grey);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .header-button:hover {
+    background-color: var(--dark-grey-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  }
   
   footer {
-            display: flex;
-            justify-content: center; /* centers horizontally */
-            align-items: center;     /* centers vertically */
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 25px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            flex-wrap: wrap;
-            position: relative;
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 25px 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+    position: relative;
+  }
+  
   main.wrap {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
   }
+  
   .card {
     background: #fff;
     padding: 20px;
@@ -56,16 +105,20 @@
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
+  
   h2 {
     margin-top: 0;
   }
+  
   .list {
     padding-left: 20px;
   }
+  
   .muted {
     color: #777;
     font-size: 0.9em;
   }
+  
   .note {
     background: #f0f4ff;
     padding: 10px;
@@ -73,14 +126,101 @@
     margin-top: 10px;
   }
   
+  .copy-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
   
+  .copy-field {
+    flex: 1;
+  }
   
+  .code {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    font-family: monospace;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  .copy-btn {
+    padding: 8px 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+  }
+  
+  .copy-btn:hover {
+    background-color: var(--primary-light);
+  }
+  
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    margin-left: 5px;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--text-color);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    margin-bottom: 20px;
+  }
+  
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Анализ акций с помощью ИИ и калькулятора внутренней стоимости</h1>
+<header class="header">
+  <div class="header-content">
+    <h1>Анализ акций с помощью ИИ и калькулятора внутренней стоимости</h1>
+  </div>
+  <div class="header-buttons">
+    <button class="header-button" onclick="window.open('https://pavlolomakin.github.io/IV-calculator/', '_blank')">Калькулятор</button>
+    <button class="header-button" onclick="window.open('https://pavlolomakin.github.io/Invest.Checklist/', '_blank')">Чеклист</button>
+  </div>
 </header>
 
 <main class="wrap">
@@ -192,7 +332,8 @@
       <li>📈 Пересчитывать Intrinsic Value после значительного роста цены акции и изменения прогноза по EPS</li>
     </ul>
     <section id="connect" style="padding: 20px; background-color: #fff; text-align: center;">
-    <h4>🧵 Делюсь мыслями и идеями в Threads <a href="https://www.threads.net/@pavlo.lomakin" target="_blank">threads.net/@pavlo.lomakin</a></h4> 
+    <h4>🧵 Делюсь мыслями и идеями в Threads <a href="https://www.threads.net/@pavlo.lomakin" target="_blank">threads.net/@pavlo.lomakin</a></h4>
+    <h4>▶️ Мой ютуб канал о Инвестициях: <a href="https://youtube.com/@PavloLomakin" target="_blank">YouTube.com/@PavloLomakin</a></h4>
     <h4>Поддержать:  ☕️<a href="https://ko-fi.com/pavlo_lomakin" target="_blank">Угостить чашкой кофе   </a> •
         <a href="https://www.patreon.com/PavloLomakin" target="_blank">Patreon</a> •
         <a href="https://www.paypal.me/pavlomakin?country.x=CA&locale.x=en_US" target="_blank">PayPal   </a></h4>
