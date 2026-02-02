@@ -2,226 +2,220 @@
 <html lang="ru">
 <head>
  
- <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJGT752QMP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-DJGT752QMP');
 </script>
  
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Анализ акций с помощью ИИ и калькулятора внутренней стоимости</title>
-<style>
- :root {
-            --primary-color: #2E7D32;
-            --primary-light: #4CAF50;
-            --secondary-color: #1565C0;
-            --secondary-light: #2196F3;
-            --background-light: #f8fafc;
-            --background-dark: #e8edf2;
-            --text-color: #2d3748;
-            --text-light: #4a5568;
-            --border-color: #e2e8f0;
-            --shadow-light: rgba(0, 0, 0, 0.05);
-            --shadow-medium: rgba(0, 0, 0, 0.1);
-            --error-color: #D32F2F;
-            --success-color: #388E3C;
-            --warning-color: #F57C00;
-            --card-radius: 12px;
-            --transition: all 0.2s ease-in-out;
-            --dark-grey: #616161;
-            --dark-grey-hover: #424242;
-        }
 
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f9f9f9;
-    color: #333;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 25px 30px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    flex-wrap: wrap;
-    position: relative;
-  }
-  
-  .header-content {
-    text-align: center;
-    flex-grow: 1;
-    padding-right: 20px;
-  }
-  
-  .header-buttons {
-    display: flex;
-    gap: 10px;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-  }
-  
-  .header-button {
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    background-color: var(--dark-grey);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition);
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .header-button:hover {
-    background-color: var(--dark-grey-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  }
-  
-  footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 25px 30px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    flex-wrap: wrap;
-    position: relative;
-  }
-  
-  main.wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .card {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 18px;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  h2 {
-    margin-top: 0;
-  }
-  
-  .list {
-    padding-left: 20px;
-  }
-  
-  .muted {
-    color: #777;
-    font-size: 0.9em;
-  }
-  
-  .note {
-    background: #f0f4ff;
-    padding: 10px;
-    border-left: 4px solid #4a90e2;
-    margin-top: 10px;
-  }
-  
-  .copy-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .copy-field {
-    flex: 1;
-  }
-  
-  .code {
-    width: 100%;
-    height: 200px;
-    padding: 10px;
-    font-family: monospace;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    resize: vertical;
-  }
-  
-  .copy-btn {
-    padding: 8px 12px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition);
-  }
-  
-  .copy-btn:hover {
-    background-color: var(--primary-light);
-  }
-  
-  .tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: help;
-    margin-left: 5px;
-  }
-  
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: var(--text-color);
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 0.85rem;
-    font-weight: 400;
-    line-height: 1.4;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .video-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    margin-bottom: 20px;
-  }
-  
-  .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
+<style>
+:root {
+  --primary-color: #2E7D32;
+  --primary-light: #4CAF50;
+  --secondary-color: #1565C0;
+  --secondary-light: #2196F3;
+  --background-light: #f8fafc;
+  --background-dark: #e8edf2;
+  --text-color: #2d3748;
+  --text-light: #4a5568;
+  --border-color: #e2e8f0;
+  --shadow-light: rgba(0, 0, 0, 0.05);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+  --error-color: #D32F2F;
+  --success-color: #388E3C;
+  --warning-color: #F57C00;
+  --card-radius: 12px;
+  --transition: all 0.2s ease-in-out;
+  --dark-grey: #616161;
+  --dark-grey-hover: #424242;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+  color: #333;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 25px 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.header-content {
+  text-align: center;
+  flex-grow: 1;
+  padding-right: 20px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.header-button {
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  background-color: var(--dark-grey);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-button:hover {
+  background-color: var(--dark-grey-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 25px 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+  position: relative;
+}
+
+main.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.card h2 {
+  margin: 0;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #444;
+}
+
+.card.collapsed .card-content {
+  display: none;
+}
+
+.list {
+  padding-left: 20px;
+}
+
+.muted {
+  color: #777;
+  font-size: 0.9em;
+}
+
+.note {
+  background: #f0f4ff;
+  padding: 10px;
+  border-left: 4px solid #4a90e2;
+  margin-top: 10px;
+}
+
+.copy-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.copy-field {
+  flex: 1;
+}
+
+.code {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  font-family: monospace;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.copy-btn {
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.copy-btn:hover {
+  background-color: var(--primary-light);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  margin-left: 5px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  margin-bottom: 20px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 </style>
 </head>
+
 <body>
 
 <header class="header">
@@ -236,22 +230,29 @@
 
 <main class="wrap">
 
-<section class="card">
-  <h2>Важное пояснение по стратегии</h2>
-  <p>Ни одна инвестиционная стратегия не гарантирует 100% результатов. <br><br>Подход на этой странице сфокусирован на качественных компаниях‑лидерах
+<!-- SECTION 1 -->
+<section class="card collapsed">
+  <h2 class="card-title">Важное пояснение по стратегии</h2>
+  <button class="toggle-btn">▼</button>
+
+  <div class="card-content">
+    <p>Ни одна инвестиционная стратегия не гарантирует 100% результатов. <br><br>Подход на этой странице сфокусирован на качественных компаниях‑лидерах
         и учитывает их текущую стоимость через внутреннюю ценность. <br><br>Это снижает риски и потенциально даёт шанс получить доход выше S&P 500 на длинном горизонте
-        при условии дисциплины: стабильного <span class="tooltip" data-i18n-title="dcaTip" title="DCA - Dollar-Cost Averaging - усреднение стоимости покупки или постепенное инвестирование фиксированной суммы.">DCA</span>, регулярной ребалансировки по плану и отсутствия панических продаж во время неизбежных просадок.
-</p>
+        при условии дисциплины: стабильного <span class="tooltip" data-i18n-title="dcaTip" title="DCA - Dollar-Cost Averaging - усреднение стоимости покупки или постепенное инвестирование фиксированной суммы.">DCA</span>, регулярной ребалансировки по плану и отсутствия панических продаж во время неизбежных просадок.</p>
+  </div>
 </section>
 
-<section id="moat" class="card">
-  <h2>Определение экономического рва с помощью ИИ</h2>
-  <p><p class="muted">
-          Скопируйте и вставьте запрос в ваш ИИ. Замените ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ на реальный тикер (например - MSFT).
-        </p>
-        <div class="copy-row">
-          <div class="copy-field">
-            <textarea id="promptMoat" class="code" spellcheck="false"> Проанализируй ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ по следующим показателям:
+<!-- SECTION 2 -->
+<section id="moat" class="card collapsed">
+  <h2 class="card-title">Определение экономического рва с помощью ИИ</h2>
+  <button class="toggle-btn">▼</button>
+
+  <div class="card-content">
+    <p class="muted">Скопируйте и вставьте запрос в ваш ИИ. Замените ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ на реальный тикер (например - MSFT).</p>
+
+    <div class="copy-row">
+      <div class="copy-field">
+        <textarea id="promptMoat" class="code" spellcheck="false">Проанализируй ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ по следующим показателям:
 • Валовая маржа выше среднеотраслевой на ≥5–10 п.п.
 • Стабильный или растущий объём продаж при высокой цене
 • Высокая доля повторных покупок
@@ -270,21 +271,47 @@
 • Сетевые эффекты
 • Структура издержек / операционный рычаг
 Дай Итоговую оценку по каждому показателю (Сильный - зеленый значок/Средний - желтый значек/Слабый - красный значек или N/A если показатель неприменим к отрасли) и Итоговую оценку рва.</textarea>
-          </div>
-          <button class="copy-btn" data-copy="#promptMoat">Копировать</button>
-        </div>
-
-
-      </section>
-</p>
+      </div>
+      <button class="copy-btn" data-copy="#promptMoat">Копировать</button>
+    </div>
+  </div>
 </section>
 
-<section id="leadership" class="card">
-  <h2>Лидерство и концентрация рынка с помощью ИИ</h2>
-        <p class="muted">Этот запрос оценивает масштаб, долю рынка и способность диктовать условия отрасли.</p>
-        <div class="copy-row">
-          <div class="copy-field">
-            <textarea id="promptLeader" class="code" spellcheck="false">Проанализируй ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ по следующим показателям:
+<!-- SECTION 2.2 -->
+<section id="moat" class="card collapsed">
+  <h2 class="card-title">Определение экономического рва (другие методы)</h2>
+  <button class="toggle-btn">▼</button>
+
+  <div class="card-content">
+    <p>1. Если у Вас есть аккаунт Interactive Brokers, Экономический Ров можно проверить за 15 секунд (смотри видео)
+    <br>--ТУТ БУДЕТ ВСТАВЛЕНА ВИДЕО-ИНСТРУКЦИЯ--
+        <br>
+        <br>Метее точные методы:
+        <br>
+    <br>2. На сайте в перечне позиций Morningstar Wide Moat ETF тикер: MOAT
+    <br> <a href="https://stockanalysis.com/etf/moat/holdings/?ref=pavlo" target="_blank" rel="noopener noreferrer">
+  stockanalysis.com/etf/moat/holdings/
+</a>
+        <br>
+        <br>3. Просто загуглить:
+        <br>Morningstar Economic Moat NVDA
+        <br>(заменяем тикер NVDA на интересующий)
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section id="leadership" class="card collapsed">
+  <h2 class="card-title">Лидерство и концентрация рынка с помощью ИИ</h2>
+  <button class="toggle-btn">▼</button>
+
+  <div class="card-content">
+    <p class="muted">Этот запрос оценивает масштаб, долю рынка и способность диктовать условия отрасли.</p>
+
+    <div class="copy-row">
+      <div class="copy-field">
+        <textarea id="promptLeader" class="code" spellcheck="false">Проанализируй ВСТАВЬТЕ_ТИКЕР_КОМПАНИИ по следующим показателям:
 
 Категория: Концентрация рынка
 — Доля рынка компании (%): прямой показатель масштаба; >40% в большинстве отраслей — признак высокой концентрации
@@ -303,95 +330,104 @@
 — Темпы роста vs отрасль: сравнение CAGR компании и отрасли; рост выше отрасли — лидер усиливает позиции
 
 Дай Итоговую оценку по каждому показателю (Сильный - зеленый значок/Средний - желтый значек/Слабый - красный значек или N/A если показатель неприменим к отрасли) и Итоговую оценку.</textarea>
-          </div>
-          <button class="copy-btn" data-copy="#promptLeader">Копировать</button>
-        </div>
-
+      </div>
+      <button class="copy-btn" data-copy="#promptLeader">Копировать</button>
+    </div>
+  </div>
 </section>
 
-<section id="calculator" class="card">
-  <h2>Как пользоваться калькулятором внутренней стоимости</h2>
-  <p class="muted">Ссылка на Калькулятор - <a href="https://pavlolomakin.github.io/IV-calculator/" target="_blank" rel="noopener noreferrer">
+<!-- SECTION 4 -->
+<section id="calculator" class="card collapsed">
+  <h2 class="card-title">Как пользоваться калькулятором внутренней стоимости</h2>
+  <button class="toggle-btn">▼</button>
+
+  <div class="card-content">
+    <p class="muted">Ссылка на Калькулятор - <a href="https://pavlolomakin.github.io/IV-calculator/" target="_blank" rel="noopener noreferrer">
   Калькулятор IV
 </a>
 
 </p>
-  <div>
-    <h3>Шаги</h3>
-    <ol class="list">
-      <li>📈 <strong>Estimated Annual Growth Rate (%)</strong> — <a href="https://stockanalysis.com/stocks/msft/forecast/?ref=pavlo" target="_blank">EPS Growth 2026–2027</a></li>
+
+    <div>
+      <h3>Шаги</h3>
+      <ol class="list">
+         <li>📈 <strong>Estimated Annual Growth Rate (%)</strong> — <a href="https://stockanalysis.com/stocks/msft/forecast/?ref=pavlo" target="_blank">EPS Growth 2026–2027</a></li>
       <li>📐 <strong>Expected Future P/E Ratio</strong> — <a href="https://stockanalysis.com/stocks/msft/financials/ratios/?ref=pavlo" target="_blank">исторические значения</a> с поправками</li>
       <li>🎯 <strong>Discount Rate (%)</strong> — обычно 10% (диапазон 8–12%)</li>
 
-    </ol>
-  </div>
-  <div class="note">
+      </ol>
+    </div>
+
+    <div class="note">
       <strong>Поправки к P/E:</strong> если прогноз по EPS Growth выше исторического - можно использовать средний исторический P/E. Если ниже - Expected Future P/E следует занизить.
     </div>
+  </div>
 </section>
 
-<section class="card">
+<!-- SECTION 5 -->
+<section class="card collapsed">
+  <h2 class="card-title">Фундамент для успешных инвестиций 🏗️</h2>
+  <button class="toggle-btn">▼</button>
 
-
-    <h2>Фундамент для успешных инвестиций 🏗️:</h2>
+  <div class="card-content">
     <ul>
-      <li>📆 DCA — 4 покупки каждую неделю при открытии позиции</li>
-      <li>🧺 Диверсификация — 12–18 акций</li>
-      <li>💪 Выбор акций США или стран с рейтингом AAA — <a href="https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating" target="_blank">проверить рейтинг стран</a></li>
-      <li>⏳ Горизонт инвестиций — минимум 3 года</li>
+      <li>📆 DCA - 4 покупки каждую неделю при открытии позиции</li>
+      <li>🧺 Диверсификация - 8-16 акций или <span class="tooltip" data-i18n-title="dcaTip" title="Стратегия, когда портфель состоит из 2 частей
+      Часть 1: ETF на широкие индексы (S&P 500, Nasdaq, MSCI World)
+      Часть 2: Акции отдельных компаний">Стратегия "Сателлиты"</span></li>
+      <li>💪 Выбор акций США или стран с рейтингом AAA - <a href="https://en.wikipedia.org/wiki/List_of_countries_by_credit_rating" target="_blank">проверить рейтинг стран</a></li>
+<li>⏳ Горизонт инвестиций <span class="tooltip" data-i18n-title="dcaTip" title="Фондовый рынок нестабилен, годы роста сменяются на месяцы (а иногда даже на годы) падений, которые требуют несколько месяцев (а иногда даже лет) для того чтобы просто вернуться на преждение высоты с которых началось падение"> - 3 года минимум (лучше 5 и более)</span></li>
       <li>🚫 Не покупать после резкого роста акции</li>
       <li>📈 Пересчитывать Intrinsic Value после значительного роста цены акции и изменения прогноза по EPS</li>
     </ul>
+
+
+  </div>
+</section>
+
     <section id="connect" style="padding: 20px; background-color: #fff; text-align: center;">
-    <h4>🧵 Делюсь мыслями и идеями в Threads <a href="https://www.threads.net/@pavlo.lomakin" target="_blank">threads.net/@pavlo.lomakin</a></h4>
+     <h4>🧵 Делюсь мыслями и идеями в Threads <a href="https://www.threads.net/@pavlo.lomakin" target="_blank">threads.net/@pavlo.lomakin</a></h4>
     <h4>▶️ Мой ютуб канал о Инвестициях: <a href="https://youtube.com/@PavloLomakin" target="_blank">YouTube.com/@PavloLomakin</a></h4>
     <h4>Поддержать:  ☕️<a href="https://ko-fi.com/pavlo_lomakin" target="_blank">Угостить чашкой кофе   </a> •
         <a href="https://www.patreon.com/PavloLomakin" target="_blank">Patreon</a> •
         <a href="https://www.paypal.me/pavlomakin?country.x=CA&locale.x=en_US" target="_blank">PayPal   </a></h4>
 
     <h4>✉ Сотрудничество и предложения Email: <a href="mailto:talkostocks@gmail.com">talkostocks@gmail.com</a></h4>
-</section>
+    </section>
+
 <main id="videoSection"> <!-- Videos will be dynamically added here --> </main>
-</section>
 
 </main>
 
 <footer>
   © Акции с Павлом Ломакиным
 </footer>
-  <script>
-    // Копирование промптов
-    document.querySelectorAll('.copy-btn').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const sel = btn.getAttribute('data-copy');
-        const el = document.querySelector(sel);
-        if(!el) return;
-        el.select();
-        el.setSelectionRange(0, el.value.length);
-        const ok = document.execCommand('copy');
-        btn.textContent = ok ? 'Скопировано' : 'Не удалось';
-        setTimeout(()=>btn.textContent='Копировать',1300);
-      });
-    });
-    
-const btn = document.getElementById('toggleListBtn');
-const list = document.getElementById('metricsList');
 
-btn.addEventListener('click', () => {
-  const isHidden = list.style.display === 'none';
-  list.style.display = isHidden ? 'block' : 'none';
-  btn.textContent = isHidden ? 'Как читать метрики ▲' : 'Как читать метрики ▼';
+<script>
+// Toggle collapsible cards
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.card');
+    card.classList.toggle('collapsed');
+    btn.textContent = card.classList.contains('collapsed') ? '▼' : '▲';
+  });
 });
 
-const btn2 = document.getElementById('toggleListBtn2');
-const list2 = document.getElementById('metricsList2');
-
-btn2.addEventListener('click', () => {
-  const isHidden = list2.style.display === 'none';
-  list2.style.display = isHidden ? 'block' : 'none';
-  btn2.textContent = isHidden ? 'Как понять ответ ИИ ▲' : 'Как понять ответ ИИ ▼';
+// Copy buttons
+document.querySelectorAll('.copy-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const sel = btn.getAttribute('data-copy');
+    const el = document.querySelector(sel);
+    if(!el) return;
+    el.select();
+    el.setSelectionRange(0, el.value.length);
+    const ok = document.execCommand('copy');
+    btn.textContent = ok ? 'Скопировано' : 'Не удалось';
+    setTimeout(()=>btn.textContent='Копировать',1300);
+  });
 });
 
+// YouTube videos
  const videoIds = [
         "ha6twKBNQuE",
         "e6ZS2lvzwpE"
@@ -411,7 +447,19 @@ btn2.addEventListener('click', () => {
         container.appendChild(iframe);
         videoSection.appendChild(container);
     });
+    
+    // Toggle by clicking on the title
+document.querySelectorAll('.card-title').forEach(title => {
+  title.addEventListener('click', () => {
+    const card = title.closest('.card');
+    const btn = card.querySelector('.toggle-btn');
+    card.classList.toggle('collapsed');
+    btn.textContent = card.classList.contains('collapsed') ? '▼' : '▲';
+  });
+});
 
-  </script>
+    
+</script>
+
 </body>
 </html>
